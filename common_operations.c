@@ -1,65 +1,63 @@
 #include "shell.h"
 
 /**
- * isInteractive - returns true if the shell is in interactive mode
- * @info: struct address
+ * determineInteractiveMode - returns true if the shell is in interactive mode
+ * @information: struct address
  *
- * Return: 1 if in interactive mode, 0 otherwise
+ * Return: 1 if interactive mode, 0 otherwise
  */
-int isInteractive(info_t *info)
+int determineInteractiveMode(info_t *information)
 {
-	return (isatty(STDIN_FILENO) && info->read_fd <= 2);
+	return (isatty(STDIN_FILENO) && information->readFileDesc <= 2);
 }
 
 /**
- * isDelimiter - checks if a character is a delimiter
- * @c: the character to check
- * @delimiter: the delimiter string
+ * isCharacterDelimiter - checks if a character is a delimiter
+ * @charToCheck: the character to check
+ * @delimiterString: the delimiter string
  * Return: 1 if true, 0 if false
  */
-int isDelimiter(char c, char *delimiter)
+int isCharacterDelimiter(char charToCheck, char *delimiterString)
 {
-	while (*delimiter)
-		if (*delimiter++ == c)
+	while (*delimiterString)
+		if (*delimiterString++ == charToCheck)
 			return (1);
 	return (0);
 }
 
 /**
- * isAlpha - checks for an alphabetic character
- * @c: The character to check
- * Return: 1 if c is alphabetic, 0 otherwise
+ * isAlphabetical - checks for an alphabetic character
+ * @charToCheck: The character to check
+ * Return: 1 if charToCheck is alphabetic, 0 otherwise
  */
-
-int isAlpha(int c)
+int isAlphabetical(int charToCheck)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+	if ((charToCheck >= 'a' && charToCheck <= 'z') || (charToCheck >= 'A' && charToCheck <= 'Z'))
 		return (1);
 	else
 		return (0);
 }
 
 /**
- * stringToInteger - converts a string to an integer
- * @s: the string to be converted
- * Return: 0 if no numbers in the string, the converted number otherwise
+ * convertStringToInteger - converts a string to an integer
+ * @stringToConvert: the string to be converted
+ * Return: 0 if no numbers in string, converted number otherwise
  */
-
-int stringToInteger(char *s)
+int convertStringToInteger(char *stringToConvert)
 {
-	int i, sign = 1, flag = 0, output;
+	int index, sign = 1, flag = 0, output;
 	unsigned int result = 0;
 
-	for (i = 0; s[i] != '\0' && flag != 2; i++)
+	for (index = 0; stringToConvert[index] != '\0' && flag != 2; index++)
 	{
-		if (s[i] == '-')
+		if (stringToConvert[index] == '-')
 			sign *= -1;
 
-		if (s[i] >= '0' && s[i] <= '9')
+		if (stringToConvert[index] >= '0' && stringToConvert[index] <= '9')
 		{
 			flag = 1;
 			result *= 10;
-			result += (s[i] - '0');
+			result += (stringToConvert[index] - '0');
 		}
 		else if (flag == 1)
 			flag = 2;
