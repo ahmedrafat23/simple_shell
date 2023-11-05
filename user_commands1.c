@@ -10,7 +10,7 @@
 int displayCommandHistory(info_t *data)
 {
 	printList(data->commandHistory);
-	return 0;
+	return (0);
 }
 
 /**
@@ -27,13 +27,13 @@ int removeUserAlias(info_t *data, char *aliasString)
 
 	equalsSign = findCharacter(aliasString, '=');
 	if (!equalsSign)
-		return 1;
+		return (1);
 	character = *equalsSign;
 	*equalsSign = 0;
 	result = deleteNodeAtIndex(&(data->userAliases),
-		findNodeIndex(data->userAliases, startsWithNode(data->userAliases, aliasString, -1)));
+		findNodeIndex(data->userAliases, startsWithNode(data->userAliases, aliasString, -1));
 	*equalsSign = character;
-	return result;
+	return (result);
 }
 
 /**
@@ -49,9 +49,9 @@ int setUserAlias(info_t *data, char *aliasString)
 
 	equalsSign = findCharacter(aliasString, '=');
 	if (!equalsSign)
-		return 1;
+		return (1);
 	if (!*++equalsSign)
-		return removeUserAlias(data, aliasString);
+		return (removeUserAlias(data, aliasString));
 
 	removeUserAlias(data, aliasString);
 	return (addNodeEnd(&(data->userAliases), aliasString, 0) == NULL);
@@ -75,9 +75,9 @@ int printUserAlias(list_t *aliasNode)
 		putcharCharacter('\'');
 		printString(aliasName + 1);
 		printString("'\n");
-		return 0;
+		return (0);
 	}
-	return 1;
+	return (1);
 }
 
 /**
@@ -100,7 +100,7 @@ int manageUserAliases(info_t *data)
 			printUserAlias(aliasNode);
 			aliasNode = aliasNode->next;
 		}
-		return 0;
+		return (0);
 	}
 	for (i = 1; data->arguments[i]; i++)
 	{
@@ -111,6 +111,6 @@ int manageUserAliases(info_t *data)
 			printUserAlias(startsWithNode(data->userAliases, data->arguments[i], '='));
 	}
 
-	return 0;
+	return (0);
 }
 
