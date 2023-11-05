@@ -112,4 +112,5 @@ int manageUserAliases(info_t *data)
     }
 
     return 0;
+}
 

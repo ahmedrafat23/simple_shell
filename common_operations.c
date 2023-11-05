@@ -69,4 +69,5 @@ int convertStringToInteger(char *stringToConvert)
 		output = result;
 
 	return (output);
+}
 
