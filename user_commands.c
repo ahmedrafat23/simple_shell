@@ -96,5 +96,4 @@ int helpCommand(info_t *data)
 	if (0)
 		printString(*argumentsArray); /* temp att_unused workaround */
 	return (0);
-}
 
