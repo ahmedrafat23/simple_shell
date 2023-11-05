@@ -31,7 +31,7 @@ int removeUserAlias(info_t *data, char *aliasString)
 	character = *equalsSign;
 	*equalsSign = 0;
 	result = deleteNodeAtIndex(&(data->userAliases),
-		findNodeIndex(data->userAliases, startsWithNode(data->userAliases, aliasString, -1));
+		findNodeIndex(data->userAliases, startsWithNode(data->userAliases, aliasString, -1)));
 	*equalsSign = character;
 	return (result);
 }
@@ -58,12 +58,12 @@ int setUserAlias(info_t *data, char *aliasString)
 }
 
 /**
- * printUserAlias - prints a user-defined alias string
+ * printuserAlias - prints a user-defined alias string
  * @aliasNode: the alias node
  *
  * Return: Always 0 on success, 1 on error
  */
-int printUserAlias(list_t *aliasNode)
+int printuserAlias(list_t *aliasNode)
 {
 	char *aliasName = NULL, *aliasValue = NULL;
 
