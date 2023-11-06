@@ -23,8 +23,8 @@ void custom_puts(char *str)
  * custom_putchar - writes the character c to stderr
  * @c: The character to print
  *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
+ * Return: On success, returns 1.
+ * On error, returns -1, and errno is set appropriately.
  */
 int custom_putchar(char c)
 {
@@ -46,8 +46,8 @@ int custom_putchar(char c)
  * @c: The character to print
  * @fd: The file descriptor to write to
  *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
+ * Return: On success, returns 1.
+ * On error, returns -1, and errno is set appropriately.
  */
 int custom_fdput(char c, int fd)
 {
@@ -69,7 +69,7 @@ int custom_fdput(char c, int fd)
  * @str: the string to be printed
  * @fd: the file descriptor to write to
  *
- * Return: the number of characters put
+ * Return: Returns the number of characters put.
  */
 int custom_putsfd(char *str, int fd)
 {
@@ -81,6 +81,6 @@ int custom_putsfd(char *str, int fd)
 	{
 		char_count += custom_fdput(*str++, fd);
 	}
-	return char_count;
+	return (char_count);
 }
 
