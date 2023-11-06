@@ -8,24 +8,24 @@
  */
 int str_to_int(char *s)
 {
-    int i = 0;
-    unsigned long result = 0;
+	int i = 0;
+	unsigned long result = 0;
 
-    if (*s == '+')
-        s++;
-    for (i = 0; s[i] != '\0'; i++)
-    {
-        if (s[i] >= '0' && s[i] <= '9')
-        {
-            result *= 10;
-            result += (s[i] - '0');
-            if (result > INT_MAX)
-                return (-1);
-        }
-        else
-            return (-1);
-    }
-    return (result);
+	if (*s == '+')
+		s++;
+	for (i = 0; s[i] != '\0'; i++)
+	{
+		if (s[i] >= '0' && s[i] <= '9')
+		{
+			result *= 10;
+			result += (s[i] - '0');
+			if (result > INT_MAX)
+				return (-1);
+		}
+		else
+			return (-1);
+	}
+	return (result);
 }
 
 /**
@@ -37,13 +37,13 @@ int str_to_int(char *s)
  */
 void err_msg(info_t *info, char *estr)
 {
-    _eputs(info->fname);
-    _eputs(": ");
-    print_dec(info->line_num, STDERR_FILENO);
-    _eputs(": ");
-    _eputs(info->args[0]);
-    _eputs(": ");
-    _eputs(estr);
+	_eputs(info->fname);
+	_eputs(": ");
+	print_dec(info->line_num, STDERR_FILENO);
+	_eputs(": ");
+	_eputs(info->args[0]);
+	_eputs(": ");
+	_eputs(estr);
 }
 
 /**
@@ -55,34 +55,34 @@ void err_msg(info_t *info, char *estr)
  */
 int print_dec(int input, int fd)
 {
-    int (*put)(char) = _put;
-    int i, count = 0;
-    unsigned int abs, curr;
+	int (*put)(char) = _put;
+	int i, count = 0;
+	unsigned int abs, curr;
 
-    if (fd == STDERR_FILENO)
-        put = _eput;
-    if (input < 0)
-    {
-        abs = -input;
-        put('-');
-        count++;
-    }
-    else
-        abs = input;
-    curr = abs;
-    for (i = 1000000000; i > 1; i /= 10)
-    {
-        if (abs / i)
-        {
-            put('0' + curr / i);
-            count++;
-        }
-        curr %= i;
-    }
-    put('0' + curr);
-    count++;
+	if (fd == STDERR_FILENO)
+		put = _eput;
+	if (input < 0)
+	{
+		abs = -input;
+		put('-');
+		count++;
+	}
+	else
+		abs = input;
+	curr = abs;
+	for (i = 1000000000; i > 1; i /= 10)
+	{
+		if (abs / i)
+		{
+			put('0' + curr / i);
+			count++;
+		}
+		curr %= i;
+	}
+	put('0' + curr);
+	count++;
 
-    return (count);
+	return (count);
 }
 
 /**
@@ -95,30 +95,30 @@ int print_dec(int input, int fd)
  */
 char *num_conv(long num, int base, int flags)
 {
-    static char *array;
-    static char buffer[50];
-    char sign = 0;
-    char *ptr;
-    unsigned long n = num;
+	static char *array;
+	static char buffer[50];
+	char sign = 0;
+	char *ptr;
+	unsigned long n = num;
 
-    if (!(flags & UNSIGNED) && num < 0)
-    {
-        n = -num;
-        sign = '-';
-    }
-    array = flags & LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
-    ptr = &buffer[49];
-    *ptr = '\0';
+	if (!(flags & UNSIGNED) && num < 0)
+	{
+		n = -num;
+		sign = '-';
+	}
+	array = flags & LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
+	ptr = &buffer[49];
+	*ptr = '\0';
 
-    do
-    {
-        *--ptr = array[n % base];
-        n /= base;
-    } while (n != 0);
+	do
+	{
+		*--ptr = array[n % base];
+		n /= base;
+	} while (n != 0);
 
-    if (sign)
-        *--ptr = sign;
-    return (ptr);
+	if (sign)
+		*--ptr = sign;
+	return (ptr);
 }
 
 /**
@@ -129,13 +129,13 @@ char *num_conv(long num, int base, int flags)
  */
 void rm_comments(char *buf)
 {
-    int i;
+	int i;
 
-    for (i = 0; buf[i] != '\0'; i++)
-        if (buf[i] == '#' && (!i || buf[i - 1] == ' '))
-        {
-            buf[i] = '\0';
-            break;
-        }
+	for (i = 0; buf[i] != '\0'; i++)
+		if (buf[i] == '#' && (!i || buf[i - 1] == ' '))
+		{
+			buf[i] = '\0';
+			break;
+		}
 }
 
