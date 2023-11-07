@@ -2,7 +2,7 @@
 
 /**
  * list_len - length of linked list
- * @h: pointer to first node
+ * @node: pointer to first node
  * Return: size of list
  */
 
