@@ -1,39 +1,27 @@
 #include "shell.h"
 
 /**
- * custom_strncpy - copies a string
+ * _strncpy - copies a string
  *
- * @dest_str: the destination string to be copied to
- * @src_str: the source string
- * @n_chars: the number of characters to be copied
+ * @dest: the destination string to be copied to
+ * @src: the source
  *
- * Return: the concatenated string
+ * Return: pointer to distination
  */
-char *custom_strncpy(char *dest_str, char *src_str, int n_chars)
+char *_strncpy(char *dest, char *src)
 {
-	int index_dest = 0, index_src = 0;
-	char *result = dest_str;
+	int i = 0;
 
-	while (src_str[index_src] != '\0' && index_dest < n_chars - 1)
+	if (dest == src || src == 0)
+		return (dest);
+	while (src[i])
 	{
-		dest_str[index_dest] = src_str[index_src];
-		index_dest++;
-		index_src++;
+		dest[i] = src[i];
+		i++;
 	}
-
-	if (index_dest < n_chars)
-	{
-		int j = index_dest;
-		while (j < n_chars)
-		{
-			dest_str[j] = '\0';
-			j++;
-		}
-	}
-
-	return (result);
+	dest[i] = 0;
+	return (dest);
 }
-
 /**
  * custom_strncat - concatenates two strings
  *
