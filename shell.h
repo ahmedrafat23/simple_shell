@@ -144,7 +144,7 @@ void _puts(char *);
 int _putchar(char);
 
 /* toem_exits.c */
-char *_strncpy(char *, char *, int);
+char *_strncpy(char *, char *);
 char *_strncat(char *, char *, int);
 char *_strchr(char *, char);
 
@@ -155,7 +155,7 @@ char **strtow(char *, char);
 /* reallocation.c */
 char *_memset(char *, char, unsigned int);
 void ffree(char **);
-void *_realloc(void *, unsigned int, unsigned int);
+void *_realloc(void *, int, int);
 
 /* memory_saver.c */
 int _free(void **);
