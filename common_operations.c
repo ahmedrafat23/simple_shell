@@ -1,73 +1,70 @@
 #include "shell.h"
 
 /**
- * determineInteractiveMode - returns true if the shell is in interactive mode
- * @information: struct address
+ * is_interactive - returns true if shell is in interactive mode
+ * @i: struct address
  *
  * Return: 1 if interactive mode, 0 otherwise
  */
-int determineInteractiveMode(info_t *information)
+int is_interactive(info_t *i)
 {
-	return (isatty(STDIN_FILENO) && information->readFileDesc <= 2);
+	return (isatty(STDIN_FILENO) && i->readfd <= 2);
 }
 
 /**
- * isCharacterDelimiter - checks if a character is a delimiter
- * @charToCheck: the character to check
- * @delimiterString: the delimiter string
+ * is_delim - checks if character is a delimiter
+ * @c: the char to check
+ * @d: the delimiter string
  * Return: 1 if true, 0 if false
  */
-int isCharacterDelimiter(char charToCheck, char *delimiterString)
+int is_delim(char c, char *d)
 {
-	while (*delimiterString)
-		if (*delimiterString++ == charToCheck)
-			return (1);
+	while (*d)
+	if (*d++ == c)
+	return (1);
 	return (0);
 }
 
 /**
- * isAlphabetical - checks for an alphabetic character
- * @charToCheck: The character to check
- * Return: 1 if charToCheck is alphabetic, 0 otherwise
+ * is_alpha - checks for alphabetic character
+ * @c: The character to input
+ * Return: 1 if c is alphabetic, 0 otherwise
  */
-int isAlphabetical(int charToCheck)
+int is_alpha(int c)
 {
-	if ((charToCheck >= 'a' && charToCheck <= 'z') || (charToCheck >= 'A' && charToCheck <= 'Z'))
-		return (1);
-	else
-		return (0);
+	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
 }
 
 /**
- * convertStringToInteger - converts a string to an integer
- * @stringToConvert: the string to be converted
+ * str_to_int - converts a string to an integer
+ * @s: the string to be converted
  * Return: 0 if no numbers in string, converted number otherwise
  */
-int convertStringToInteger(char *stringToConvert)
+int str_to_int(char *s)
 {
-	int index, sign = 1, flag = 0, output;
-	unsigned int result = 0;
+	int i, sg = 1, f = 0, out;
+	unsigned int r = 0;
 
-	for (index = 0; stringToConvert[index] != '\0' && flag != 2; index++)
+	for (i = 0; s[i] != '\0' && f != 2; i++)
 	{
-		if (stringToConvert[index] == '-')
-			sign *= -1;
+	if (s[i] == '-')
+	sg *= -1;
 
-		if (stringToConvert[index] >= '0' && stringToConvert[index] <= '9')
-		{
-			flag = 1;
-			result *= 10;
-			result += (stringToConvert[index] - '0');
-		}
-		else if (flag == 1)
-			flag = 2;
+	if (s[i] >= '0' && s[i] <= '9')
+	{
+	f = 1;
+	r *= 10;
+	r += (s[i] - '0');
+	}
+	else if (f == 1)
+	f = 2;
 	}
 
-	if (sign == -1)
-		output = -result;
+	if (sg == -1)
+	out = -r;
 	else
-		output = result;
+	out = r;
 
-	return (output);
+	return (out);
 }
 
