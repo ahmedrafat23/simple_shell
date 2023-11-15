@@ -31,8 +31,8 @@ ssize_t buffer_input(info_t *info, char **buf, size_t *len)
 	read_bytes--;
 	}
 	info->linecount_flag = 1;
-	remove_comments(*buf);
-	build_history_list(info, *buf, info->histcount++);
+	re_comments(*buf);
+	build_hist_list(info, *buf, info->histcount++);
 	/* if (_strchr(*buf, ';')) is this a command chain? */
 	{
 	*len = read_bytes;
