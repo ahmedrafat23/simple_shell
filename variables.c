@@ -135,7 +135,7 @@ int re_vars(info_t *info)
 		}
 		if (!_strcmp(info->argv[k], "$$"))
 		{
-			replace_string(&(info->argv[k]),
+			re_string(&(info->argv[k]),
 						   _strdup(convert_number(getpid(), 10, 0)));
 			continue;
 		}
