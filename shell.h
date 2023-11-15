@@ -95,7 +95,7 @@ typedef struct passinfo
 } info_t;
 
 #define INFO_INIT {NULL, NULL, NULL, 0, 0, 0, 0, \
-	NULL, NULL, NULL, NULL, 0, 0, NULL, 0, 0, 0}
+	NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, 0, 0, 0}
 
 /**
  * struct builtin - contains a builtin string and related function
@@ -109,13 +109,15 @@ typedef struct builtin
 	int (*func)(info_t *);
 } builtin_table;
 
-/* toem_shloop.c */
+/* shell_operations.c */
 int hsh(info_t *, char **);
 int find_builtin(info_t *);
+
+/* shell_operations2.c */
 void fork_cmd(info_t *);
 void find_cmd(info_t *);
 
-/* toem_parser.c */
+/* path_of_cmd.c */
 int is_cmd(info_t *, char *);
 char *dup_chars(char *, int, int);
 char *find_path(info_t *, char *, char *);
@@ -150,7 +152,7 @@ char *_strchr(char *, char);
 char **d_strtow(char *, char *);
 char **strtow(char *, char);
 
-/* toem_realloc.c */
+/* reallocation.c */
 char *_memset(char *, char, unsigned int);
 void ffree(char **);
 void *_realloc(void *, unsigned int, unsigned int);
