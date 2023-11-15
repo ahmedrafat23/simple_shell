@@ -4,7 +4,7 @@
  * init_custom_info - initializes custom_info_t struct
  * @info: struct address
  */
-void init_custom_info(custom_info_t *info)
+void init_custom_info(info_t *info)
 {
 	info->arguments = NULL;
 	info->argument_vector = NULL;
@@ -17,7 +17,7 @@ void init_custom_info(custom_info_t *info)
  * @info: struct address
  * @arg_vector: argument vector
  */
-void configure_custom_info(custom_info_t *info, char **arg_vector)
+void configure_custom_info(info_t *info, char **arg_vector)
 {
 	int i = 0;
 
@@ -48,7 +48,7 @@ void configure_custom_info(custom_info_t *info, char **arg_vector)
  * @info: struct address
  * @all: true if freeing all fields
  */
-void release_custom_info(custom_info_t *info, int all)
+void release_custom_info(info_t *info, int all)
 {
 	ffree(info->argument_vector);
 	info->argument_vector = NULL;
@@ -71,4 +71,3 @@ void release_custom_info(custom_info_t *info, int all)
 		_putchar(BUF_FLUSH);
 	}
 }
-
