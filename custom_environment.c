@@ -1,94 +1,91 @@
-#include "custom_shell.h"
+#include "shell.h"
 
 /**
- * get_custom_environment - returns the string array copy of our custom environment
- * @custom_info: Structure containing potential arguments. Used to maintain
- *          constant function prototype.
+ * get_environment - returns the string array copy of our environment
+ * @info: Structure containing potential arguments.
  * Return: Always 0
  */
-char **get_custom_environment(custom_info_t *custom_info)
+char **get_environment(info_t *info)
 {
-	if (!custom_info->env_array || custom_info->env_changed)
+	if (!info->environ || info->env_changed)
 	{
-	custom_info->env_array = list_to_strings(custom_info->custom_env_list);
-	custom_info->env_changed = 0;
+		info->environ = list_to_strings(info->env);
+		info->env_changed = 0;
 	}
 
-	return (custom_info->env_array);
+	return (info->environ);
 }
 
 /**
- * remove_custom_env_var - Remove a variable from the custom environment
- * @custom_info: Structure containing potential arguments. Used to maintain
- *        constant function prototype.
- *  Return: 1 on delete, 0 otherwise
- * @var_name: the variable name to be removed
+ * unset_environment - Remove an environment variable
+ * @info: Structure containing potential arguments.
+ * Return: 1 on delete, 0 otherwise
+ * @var: the string env var property
  */
-int remove_custom_env_var(custom_info_t *custom_info, char *var_name)
+int unset_environment(info_t *info, char *var)
 {
-	list_t *node = custom_info->custom_env_list;
-	size_t index = 0;
+	list_t *node = info->env;
+	size_t i = 0;
 	char *p;
 
-	if (!node || !var_name)
-	return (0);
+	if (!node || !var)
+		return (0);
 
 	while (node)
 	{
-	p = starts_with(node->str, var_name);
-	if (p && *p == '=')
-	{
-	custom_info->env_changed = delete_node_at_index(&(custom_info->custom_env_list), index);
-	index = 0;
-	node = custom_info->custom_env_list;
-	continue;
+		p = starts_with(node->str, var);
+		if (p && *p == '=')
+		{
+			info->env_changed = delete_node_at_index(&(info->env), i);
+			i = 0;
+			node = info->env;
+			continue;
+		}
+		node = node->next;
+		i++;
 	}
-	node = node->next;
-	index++;
-	}
-	return (custom_info->env_changed);
+	return (info->env_changed);
 }
 
 /**
- * set_custom_env_var - Initialize a new custom environment variable,
- *             or modify an existing one
- * @custom_info: Structure containing potential arguments. Used to maintain
- *        constant function prototype.
- * @var_name: the variable name
- * @var_value: the variable value
- *  Return: Always 0
+ * set_environment - Initialize a new environment variable,
+ *                   or modify an existing one
+ * @info: Structure containing potential arguments.
+ * @var: the string env var property
+ * @value: the string env var value
+ * Return: Always 0
  */
-int set_custom_env_var(custom_info_t *custom_info, char *var_name, char *var_value)
+int set_environment(info_t *info, char *var, char *value)
 {
-	char *buffer = NULL;
+	char *buf = NULL;
 	list_t *node;
 	char *p;
 
-	if (!var_name || !var_value)
-	return (0);
+	if (!var || !value)
+		return (0);
 
-	buffer = malloc(_strlen(var_name) + _strlen(var_value) + 2);
-	if (!buffer)
-	return (1);
-	_strcpy(buffer, var_name);
-	_strcat(buffer, "=");
-	_strcat(buffer, var_value);
-	node = custom_info->custom_env_list;
+	buf = malloc(_strlen(var) + _strlen(value) + 2);
+	if (!buf)
+		return (1);
+	_strcpy(buf, var);
+	_strcat(buf, "=");
+	_strcat(buf, value);
+	node = info->env;
 	while (node)
 	{
-	p = starts_with(node->str, var_name);
-	if (p && *p == '=')
-	{
-	free(node->str);
-	node->str = buffer;
-	custom_info->env_changed = 1;
-	return (0);
+		p = starts_with(node->str, var);
+		if (p && *p == '=')
+		{
+			free(node->str);
+			node->str = buf;
+			info->env_changed = 1;
+			return (0);
+		}
+		node = node->next;
 	}
-	node = node->next;
-	}
-	add_node_end(&(custom_info->custom_env_list), buffer, 0);
-	free(buffer);
-	custom_info->env_changed = 1;
+	add_node_end(&(info->env), buf, 0);
+	free(buf);
+	info->env_changed = 1;
 	return (0);
 }
 
