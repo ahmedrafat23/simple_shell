@@ -44,7 +44,7 @@ char *_strcpy(char *dest, char *src)
 		dest[i] = src[i];
 		i++;
 	}
-	dest[i] = NULL;
+	dest[i] = 0;
 	return (dest);
 }
 
