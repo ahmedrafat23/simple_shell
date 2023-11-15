@@ -7,8 +7,8 @@
  */
 int print_env(info_t *info)
 {
-        print_list_str(info->env);
-        return (0);
+	print_list_str(info->env);
+	return (0);
 }
 
 /**
@@ -20,34 +20,34 @@ int print_env(info_t *info)
  */
 char *get_env(info_t *info, const char *name)
 {
-        list_t *node = info->env;
-        char *value;
+	list_t *node = info->env;
+	char *value;
 
-        while (node)
-        {
-                value = starts_with(node->str, name);
-                if (value && *value)
-                        return (value);
-                node = node->next;
-        }
-        return (NULL);
+	while (node)
+	{
+		value = starts_with(node->str, name);
+		if (value && *value)
+			return (value);
+		node = node->next;
+	}
+	return (NULL);
 }
 
 /**
- * set_env - Initializes a new environment variable or modifies an existing one.
+ * set_env - Initializes a new environment variable
  * @info: Structure containing potential arguments.
  * Return: Always 0
  */
 int set_env(info_t *info)
 {
-        if (info->argc != 3)
-        {
-                _eputs("Incorrect number of arguments\n");
-                return (1);
-        }
-        if (_setenv(info, info->argv[1], info->argv[2]))
-                return (0);
-        return (1);
+	if (info->argc != 3)
+	{
+		_eputs("Incorrect number of arguments\n");
+		return (1);
+	}
+	if (_setenv(info, info->argv[1], info->argv[2]))
+		return (0);
+	return (1);
 }
 
 /**
@@ -85,4 +85,3 @@ int pop_env(info_t *info)
 	info->env = node;
 	return (0);
 }
-
