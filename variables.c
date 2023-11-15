@@ -100,7 +100,7 @@ int re_alias(info_t *info)
 		if (!node)
 			return (0);
 		free(info->argv[0]);
-		c = _strchr(node->str, '=');
+		c = custom_strchr(node->str, '=');
 		if (!c)
 			return (0);
 		c = _strdup(c + 1);
@@ -130,20 +130,20 @@ int re_vars(info_t *info)
 		if (!_strcmp(info->argv[k], "$?"))
 		{
 			re_string(&(info->argv[k]),
-						   _strdup(convert_number(info->status, 10, 0)));
+						   _strdup(num_conv(info->status, 10, 0)));
 			continue;
 		}
 		if (!_strcmp(info->argv[k], "$$"))
 		{
 			re_string(&(info->argv[k]),
-						   _strdup(convert_number(getpid(), 10, 0)));
+						   _strdup(num_conv(getpid(), 10, 0)));
 			continue;
 		}
 		node = node_starts_with(info->env, &info->argv[k][1], '=');
 		if (node)
 		{
 			re_string(&(info->argv[k]),
-						   _strdup(_strchr(node->str, '=') + 1));
+						   _strdup(custom_strchr(node->str, '=') + 1));
 			continue;
 		}
 		re_string(&info->argv[k], _strdup(""));
