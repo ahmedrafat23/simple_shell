@@ -12,13 +12,13 @@ int print_env(info_t *info)
 }
 
 /**
- * get_env_value - Gets the value of an environment variable.
+ * get_env - Gets the value of an environment variable.
  * @info: Structure containing potential arguments.
  * @name: Environment variable name.
  *
  * Return: The value of the environment variable.
  */
-char *get_env_value(info_t *info, const char *name)
+char *get_env(info_t *info, const char *name)
 {
 	list_t *node = info->env;
 	char *value;
@@ -34,11 +34,11 @@ char *get_env_value(info_t *info, const char *name)
 }
 
 /**
- * set_env_variable - Initializes a new environment variable or modifies an existing one.
+ * setenv - Initializes a new environment variable or modifies an existing one.
  * @info: Structure containing potential arguments.
  * Return: Always 0
  */
-int set_env_variable(info_t *info)
+int setenv(info_t *info)
 {
 	if (info->argc != 3)
 	{
@@ -51,11 +51,11 @@ int set_env_variable(info_t *info)
 }
 
 /**
- * unset_env_variable - Removes an environment variable.
+ * unset_env - Removes an environment variable.
  * @info: Structure containing potential arguments.
  * Return: Always 0
  */
-int unset_env_variable(info_t *info)
+int unset_env(info_t *info)
 {
 	int i;
 
@@ -71,11 +71,11 @@ int unset_env_variable(info_t *info)
 }
 
 /**
- * populate_env_list - Populates the environment linked list.
+ * pop_env - Populates the environment linked list.
  * @info: Structure containing potential arguments.
  * Return: Always 0
  */
-int populate_env_list(info_t *info)
+int pop_env(info_t *info)
 {
 	list_t *node = NULL;
 	size_t i;
