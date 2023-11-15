@@ -71,3 +71,4 @@ void release_custom_info(info_t *info, int all)
 		_putchar(BUF_FLUSH);
 	}
 }
+

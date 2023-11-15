@@ -94,3 +94,4 @@ char **strtow(char *str, char d)
 	c[j] = NULL;
 	return (c);
 }
+

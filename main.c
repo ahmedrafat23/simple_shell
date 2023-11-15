@@ -43,3 +43,4 @@ int main(int arc, char **arv)
 	hsh(info, arv);
 	return (EXIT_SUCCESS);
 }
+

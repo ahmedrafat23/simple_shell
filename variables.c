@@ -151,3 +151,4 @@ int replace_vars(info_t *info)
 	}
 	return (0);
 }
+
