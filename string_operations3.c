@@ -20,7 +20,7 @@ char *_strdup(const char *str)
 	if (!c)
 		return (NULL);
 
-	for (i = length + 1; i != 0; i--;)
+	for (i = length + 1; i != 0; i--)
 		c[i] = *--str;
 	return (c);
 }
