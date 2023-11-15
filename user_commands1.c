@@ -1,114 +1,113 @@
 #include "shell.h"
 
 /**
- * displayCommandHistory - displays the history list, one command by line,
- * preceded with line numbers, starting at 0.
- * @data: Structure containing potential arguments. Used to maintain
- * constant function prototype.
+ * history_display - displays the history list, one command by line, preceded
+ *                   with line numbers, starting at 0.
+ * @info: Structure containing potential arguments.
  * Return: Always 0
  */
-int displayCommandHistory(info_t *data)
+int history_display(info_t *info)
 {
-	printList(data->commandHistory);
+	print_list(info->history);
 	return (0);
 }
 
 /**
- * removeUserAlias - removes user-defined alias
- * @data: parameter struct
- * @aliasString: the alias string
+ * unset_alias - unsets alias to string
+ * @info: parameter struct
+ * @str: the string alias
  *
  * Return: Always 0 on success, 1 on error
  */
-int removeUserAlias(info_t *data, char *aliasString)
+int unset_alias(info_t *info, char *str)
 {
-	char *equalsSign, character;
-	int result;
+	char *p, c;
+	int ret;
 
-	equalsSign = findCharacter(aliasString, '=');
-	if (!equalsSign)
+	p = _strchr(str, '=');
+	if (!p)
 		return (1);
-	character = *equalsSign;
-	*equalsSign = 0;
-	result = deleteNodeAtIndex(&(data->userAliases),
-		findNodeIndex(data->userAliases, startsWithNode(data->userAliases, aliasString, -1)));
-	*equalsSign = character;
-	return (result);
+	c = *p;
+	*p = 0;
+	ret = delete_node_at_index(&(info->alias),
+		get_node_index(info->alias, node_starts_with(info->alias, str, -1)));
+	*p = c;
+	return (ret);
 }
 
 /**
- * setUserAlias - sets user-defined alias
- * @data: parameter struct
- * @aliasString: the alias string
+ * set_alias - sets alias to string
+ * @info: parameter struct
+ * @str: the string alias
  *
  * Return: Always 0 on success, 1 on error
  */
-int setUserAlias(info_t *data, char *aliasString)
+int set_alias(info_t *info, char *str)
 {
-	char *equalsSign;
+	char *p;
 
-	equalsSign = findCharacter(aliasString, '=');
-	if (!equalsSign)
+	p = _strchr(str, '=');
+	if (!p)
 		return (1);
-	if (!*++equalsSign)
-		return (removeUserAlias(data, aliasString));
+	if (!*++p)
+		return (unset_alias(info, str));
 
-	removeUserAlias(data, aliasString);
-	return (addNodeEnd(&(data->userAliases), aliasString, 0) == NULL);
+	unset_alias(info, str);
+	return (add_node_end(&(info->alias), str, 0) == NULL);
 }
 
 /**
- * printuserAlias - prints a user-defined alias string
- * @aliasNode: the alias node
+ * print_alias - prints an alias string
+ * @node: the alias node
  *
  * Return: Always 0 on success, 1 on error
  */
-int printuserAlias(list_t *aliasNode)
+int print_alias(list_t *node)
 {
-	char *aliasName = NULL, *aliasValue = NULL;
+	char *p = NULL, *a = NULL;
 
-	if (aliasNode)
+	if (node)
 	{
-		aliasName = findCharacter(aliasNode->str, '=');
-		for (aliasValue = aliasNode->str; aliasValue <= aliasName; aliasValue++)
-			putcharCharacter(*aliasValue);
-		putcharCharacter('\'');
-		printString(aliasName + 1);
-		printString("'\n");
+		p = _strchr(node->str, '=');
+		for (a = node->str; a <= p; a++)
+			_putchar(*a);
+		_putchar('\'');
+		_puts(p + 1);
+		_puts("'\n");
 		return (0);
 	}
 	return (1);
 }
 
 /**
- * manageUserAliases - manages user-defined aliases
- * @data: Structure containing potential arguments. Used to maintain
- * constant function prototype.
+ * alias_shell - mimics the alias builtin (man alias)
+ * @info: Structure containing potential arguments.
  * Return: Always 0
  */
-int manageUserAliases(info_t *data)
+int alias_shell(info_t *info)
 {
 	int i = 0;
-	char *aliasChar = NULL;
-	list_t *aliasNode = NULL;
+	char *p = NULL;
+	list_t *node = NULL;
 
-	if (data->argumentCount == 1)
+	if (info->argc == 1)
 	{
-		aliasNode = data->userAliases;
-		while (aliasNode)
+		node = info->alias;
+		while (node)
 		{
-			printUserAlias(aliasNode);
-			aliasNode = aliasNode->next;
+			print_alias(node);
+			node = node->next;
 		}
 		return (0);
 	}
-	for (i = 1; data->arguments[i]; i++)
+
+	for (i = 1; info->argv[i]; i++)
 	{
-		aliasChar = findCharacter(data->arguments[i], '=');
-		if (aliasChar)
-			setUserAlias(data, data->arguments[i]);
+		p = _strchr(info->argv[i], '=');
+		if (p)
+			set_alias(info, info->argv[i]);
 		else
-			printUserAlias(startsWithNode(data->userAliases, data->arguments[i], '='));
+			print_alias(node_starts_with(info->alias, info->argv[i], '='));
 	}
 
 	return (0);
