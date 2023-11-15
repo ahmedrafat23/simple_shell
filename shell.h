@@ -155,7 +155,7 @@ char **strtow(char *, char);
 /* reallocation.c */
 char *_memset(char *, char, unsigned int);
 void ffree(char **);
-void *_realloc(void *, unsigned int, unsigned int);
+void *_realloc(void *, int, int);
 
 /* memory_saver.c */
 int _free(void **);
