@@ -6,10 +6,10 @@
  */
 void init_custom_info(info_t *info)
 {
-	info->arguments = NULL;
-	info->argument_vector = NULL;
+	info->arg = NULL;
+	info->argv = NULL;
 	info->path = NULL;
-	info->argument_count = 0;
+	info->argc = 0;
 }
 
 /**
@@ -21,22 +21,22 @@ void configure_custom_info(info_t *info, char **arg_vector)
 {
 	int i = 0;
 
-	info->program_name = arg_vector[0];
-	if (info->arguments)
+	info->fname = argv[0];
+	if (info->arg)
 	{
-		info->argument_vector = strtow(info->arguments, " \t");
-		if (!info->argument_vector)
+		info->argv = strtow(info->arg, " \t");
+		if (!info->argv)
 		{
-			info->argument_vector = malloc(sizeof(char *) * 2);
-			if (info->argument_vector)
+			info->argv = malloc(sizeof(char *) * 2);
+			if (info->argv)
 			{
-				info->argument_vector[0] = _strdup(info->arguments);
-				info->argument_vector[1] = NULL;
+				info->argv[0] = _strdup(info->arg);
+				info->argv[1] = NULL;
 			}
 		}
-		for (i = 0; info->argument_vector && info->argument_vector[i]; i++)
+		for (i = 0; info->argv && info->argv[i]; i++)
 			;
-		info->argument_count = i;
+		info->argc = i;
 
 		replace_custom_alias(info);
 		replace_custom_vars(info);
@@ -50,24 +50,24 @@ void configure_custom_info(info_t *info, char **arg_vector)
  */
 void release_custom_info(info_t *info, int all)
 {
-	ffree(info->argument_vector);
-	info->argument_vector = NULL;
+	ffree(info->argv);
+	info->argv = NULL;
 	info->path = NULL;
 	if (all)
 	{
-		if (!info->command_buffer)
-			free(info->arguments);
-		if (info->custom_env_list)
-			free_list(&(info->custom_env_list));
-		if (info->command_history)
-			free_list(&(info->command_history));
-		if (info->custom_alias_list)
-			free_list(&(info->custom_alias_list));
-		ffree(info->custom_environment);
-		info->custom_environment = NULL;
-		bfree((void **)info->command_buffer);
-		if (info->read_file_descriptor > 2)
-			close(info->read_file_descriptor);
+		if (!info->cmd_buf)
+			free(info->arg);
+		if (info->env)
+			free_list(&(info->env));
+		if (info->history)
+			free_list(&(info->history));
+		if (info->alias)
+			free_list(&(info->alias));
+		ffree(info->environ);
+		info->environ = NULL;
+		bfree((void **)info->cmd_buf);
+		if (info->readfd > 2)
+			close(info->readfd);
 		_putchar(BUF_FLUSH);
 	}
 }
