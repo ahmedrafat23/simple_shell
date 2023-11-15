@@ -36,7 +36,7 @@ int is_chain(info_t *info, char *buf, size_t *p)
 }
 
 /**
- * check_chain - checks we should continue chaining based on last status
+ * ch_chain - checks we should continue chaining based on last status
  * @info: the parameter struct
  * @buf: the char buffer
  * @p: address of current position in buf
@@ -45,7 +45,7 @@ int is_chain(info_t *info, char *buf, size_t *p)
  * Return: Void
  */
 
-void check_chain(info_t *info, char *buf, size_t *p, size_t i, size_t len)
+void ch_chain(info_t *info, char *buf, size_t *p, size_t i, size_t len)
 {
 	size_t j = *p;
 
@@ -69,13 +69,13 @@ void check_chain(info_t *info, char *buf, size_t *p, size_t i, size_t len)
 }
 
 /**
- * replace_string - replaces string
+ * re_string - replaces string
  * @old: address of old string
  * @new: new string
  * Return: 1
  */
 
-int replace_string(char **old, char *new)
+int re_string(char **old, char *new)
 {
 	free(*old);
 	*old = new;
@@ -83,12 +83,12 @@ int replace_string(char **old, char *new)
 }
 
 /**
- * replace_alias - replaces an aliases in the tokenized string
+ * re_alias - replaces an aliases in the tokenized string
  * @info: the parameter struct
  * Return: 1
  */
 
-int replace_alias(info_t *info)
+int re_alias(info_t *info)
 {
 	int i = 0;
 	list_t *node;
@@ -113,12 +113,12 @@ int replace_alias(info_t *info)
 }
 
 /**
- * replace_vars - replaces vars in the tokenized string
+ * re_vars - replaces vars in the tokenized string
  * @info: the parameter struct
  * Return: 1
  */
 
-int replace_vars(info_t *info)
+int re_vars(info_t *info)
 {
 	int k = 0;
 	list_t *node;
@@ -129,7 +129,7 @@ int replace_vars(info_t *info)
 			continue;
 		if (!_strcmp(info->argv[k], "$?"))
 		{
-			replace_string(&(info->argv[k]),
+			re_string(&(info->argv[k]),
 						   _strdup(convert_number(info->status, 10, 0)));
 			continue;
 		}
@@ -142,11 +142,11 @@ int replace_vars(info_t *info)
 		node = node_starts_with(info->env, &info->argv[k][1], '=');
 		if (node)
 		{
-			replace_string(&(info->argv[k]),
+			re_string(&(info->argv[k]),
 						   _strdup(_strchr(node->str, '=') + 1));
 			continue;
 		}
-		replace_string(&info->argv[k], _strdup(""));
+		re_string(&info->argv[k], _strdup(""));
 		k++;
 	}
 	return (0);
