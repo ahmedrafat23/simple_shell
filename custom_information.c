@@ -24,7 +24,7 @@ void configure_custom_info(info_t *info, char **arg_vector)
 	info->fname = argv[0];
 	if (info->arg)
 	{
-		info->argv = strtow(info->arg, " \t");
+		info->argv = strtow(info->arg, (char *) " \t");
 		if (!info->argv)
 		{
 			info->argv = malloc(sizeof(char *) * 2);
@@ -38,8 +38,8 @@ void configure_custom_info(info_t *info, char **arg_vector)
 			;
 		info->argc = i;
 
-		replace_custom_alias(info);
-		replace_custom_vars(info);
+		re_alias(info);
+		re_vars(info);
 	}
 }
 
@@ -65,7 +65,7 @@ void release_custom_info(info_t *info, int all)
 			free_list(&(info->alias));
 		ffree(info->environ);
 		info->environ = NULL;
-		bfree((void **)info->cmd_buf);
+		_free((void **)info->cmd_buf);
 		if (info->readfd > 2)
 			close(info->readfd);
 		_putchar(BUF_FLUSH);

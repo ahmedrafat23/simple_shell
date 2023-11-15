@@ -17,3 +17,23 @@ int _free(void **ptr)
 	return (0);
 }
 
+/**
+ * free_list - delete all the list
+ * @node: pointer to the first node
+ */
+
+void free_list(node *head)
+{
+	node *current = head;
+	node *nextNode;
+
+	while (current != NULL)
+	{
+		nextNode = current->next;
+		free(current->num);
+		free(current->str);
+		free(current);
+		current = nextNode;
+	}
+}
+
