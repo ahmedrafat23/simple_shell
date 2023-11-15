@@ -159,7 +159,7 @@ void *_realloc(void *, int, int);
 
 /* memory_saver.c */
 int _free(void **);
-void free_list(list_t *);
+void free_list(list_t **);
 
 /* common_operations.c */
 int is_interactive(info_t *);

@@ -22,7 +22,7 @@ int _free(void **ptr)
  * @node: pointer to the first node
  */
 
-void free_list(list_t *head)
+void free_list(list_t **head)
 {
 	list_t *current = head;
 	list_t *nextNode;
