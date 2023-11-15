@@ -95,7 +95,7 @@ typedef struct passinfo
 } info_t;
 
 #define INFO_INIT{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, \
-	NULL, NULL, NULL, 0, 0, NULL, 0, 0, 0 }
+NULL, NULL, NULL, 0, 0, NULL, 0, 0, 0}
 
 /**
  * struct builtin - contains a builtin string and related function
@@ -178,22 +178,20 @@ int ex_sh(info_t *);
 int ch_dir(info_t *);
 int _help(info_t *);
 
-/* toem_builtin1.c */
-int _myhistory(info_t *);
-int _myalias(info_t *);
+/* user_commands1.c */
+int history_display(info_t);
+int unset_alias(info_t, char);
+int set_alias(info_t, char);
+int print_alias(list_t);
+int alias_shell(info_t);
 
-/**
- *
- * toem_getline.c
-*/
+/* enhanced_operations.c */
 
-/*ssize_t get_input(info_t *);*/
 ssize_t buffer_input(info_t, char, size_t);
-
-/*int _getline(info_t *, char **, size_t *);*/
 ssize_t receive_input(info_t *info);
-
-void sigintHandler(int);
+ssize_t read_buf(info_t, char, size_t);
+int custom_getline(info_t, char, size_t);
+void handle_sigint(__attribute__((unused)) int);
 
 /* custom_information.c */
 void init_custom_info(info_t *);
