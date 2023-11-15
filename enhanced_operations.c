@@ -21,7 +21,7 @@ ssize_t buffer_input(info_t *info, char **buf, size_t *len)
 #if USE_GETLINE
 	read_bytes = getline(buf, &len_pos, stdin);
 #else
-	read_bytes = _getline(info, buf, &len_pos);
+	read_bytes = custom_getline(info, buf, &len_pos);
 #endif
 	if (read_bytes > 0)
 	{
@@ -36,7 +36,7 @@ ssize_t buffer_input(info_t *info, char **buf, size_t *len)
 	/* if (_strchr(*buf, ';')) is this a command chain? */
 	{
 	*len = read_bytes;
-	info->cmd_buffer = buf;
+	info->cmd_buf = buf;
 	}
 	}
 	}
@@ -54,7 +54,7 @@ ssize_t receive_input(info_t *info)
 	static char *buf; /* the ';' command chain buffer */
 	static size_t i, j, len;
 	ssize_t read_bytes = 0;
-	char **buf_ptr = &(info->arguments), *ptr;
+	char **buf_ptr = &(info->arg), *ptr;
 
 	_putchar(BUF_FLUSH);
 	read_bytes = buffer_input(info, &buf, &len);
