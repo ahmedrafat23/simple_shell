@@ -96,7 +96,7 @@ int read_hist(info_t *info)
 	free(buf);
 	info->histcount = lcount;
 	while (info->histcount-- >= HIST_MAX)
-		delete_node_at_index(&(info->history), 0);
+		remove_node_at_index(&(info->history), 0);
 	renumber_hist(info);
 	return (info->histcount);
 }
@@ -115,7 +115,7 @@ int build_hist_list(info_t *info, char *buf, int lcount)
 
 	if (info->history)
 		node = info->history;
-	add_node_end(&node, buf, lcount);
+	append_list_node(&node, buf, lcount);
 
 	if (!info->history)
 		info->history = node;
