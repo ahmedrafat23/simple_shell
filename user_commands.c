@@ -1,100 +1,98 @@
 #include "shell.h"
 
 /**
- * exitShell - exits the shell
- * @data: Structure containing potential arguments. Used to maintain
+ * ex_sh - exits the shell
+ * @info: Structure containing potential arguments. Used to maintain
  * constant function prototype.
  * Return: exits with a given exit status
- * (0) if data.argv[0] != "exit"
+ * (0) if info.argv[0] != "exit"
  */
-int exitShell(info_t *data)
+int ex_sh(info_t *info)
 {
-	int exitCheck;
+	int exitcheck;
 
-	if (data->arguments[1]) /* If there is an exit argument */
+	if (info->argv[1]) /* If there is an exit arguement */
 	{
-		exitCheck = stringToInteger(data->arguments[1]);
-		if (exitCheck == -1)
+		exitcheck = _erratoi(info->argv[1]);
+		if (exitcheck == -1)
 		{
-			data->status = 2;
-			printError(data, "Illegal number: ");
-			printString(data->arguments[1]);
-			printCharacter('\n');
+			info->status = 2;
+			print_error(info, "Illegal number: ");
+			_eputs(info->argv[1]);
+			_eputchar('\n');
 			return (1);
 		}
-		data->errorNumber = stringToInteger(data->arguments[1]);
+		info->err_num = _erratoi(info->argv[1]);
 		return (-2);
 	}
-	data->errorNumber = -1;
+	info->err_num = -1;
 	return (-2);
 }
 
 /**
- * changeDirectory - changes the current directory of the process
- * @data: Structure containing potential arguments. Used to maintain
+ * ch_dir - changes the current directory of the process
+ * @info: Structure containing potential arguments. Used to maintain
  * constant function prototype.
  * Return: Always 0
  */
-int changeDirectory(info_t *data)
+int ch_dir(info_t *info)
 {
 	char *s, *dir, buffer[1024];
-	int chdirReturn;
+	int chdir_ret;
 
-	s = getCurrentWorkingDirectory(buffer, 1024);
+	s = getcwd(buffer, 1024);
 	if (!s)
-		printString("TODO: >>getcwd failure emsg here<<\n");
-	if (!data->arguments[1])
+		_puts("TODO: >>getcwd failure emsg here<<\n");
+	if (!info->argv[1])
 	{
-		dir = getEnvironmentVariable(data, "HOME=");
+		dir = _getenv(info, "HOME=");
 		if (!dir)
-			chdirReturn = /* TODO: what should this be? */
-				changeCurrentDirectory((dir = getEnvironmentVariable(data, "PWD=")) ? dir : "/");
+			chdir_ret = /* TODO: what should this be? */
+				chdir((dir = _getenv(info, "PWD=")) ? dir : "/");
 		else
-			chdirReturn = changeCurrentDirectory(dir);
+			chdir_ret = chdir(dir);
 	}
-	else if (compareStrings(data->arguments[1], "-") == 0)
+	else if (_strcmp(info->argv[1], "-") == 0)
 	{
-		if (!getEnvironmentVariable(data, "OLDPWD="))
+		if (!_getenv(info, "OLDPWD="))
 		{
-			printString(s);
-			printCharacter('\n');
+			_puts(s);
+			_putchar('\n');
 			return (1);
 		}
-		printString(getEnvironmentVariable(data, "OLDPWD="));
-		printCharacter('\n');
-		chdirReturn = /* TODO: what should this be? */
-			changeCurrentDirectory((dir = getEnvironmentVariable(data, "OLDPWD=")) ? dir : "/");
+		_puts(_getenv(info, "OLDPWD=")), _putchar('\n');
+		chdir_ret = /* TODO: what should this be? */
+			chdir((dir = _getenv(info, "OLDPWD=")) ? dir : "/");
 	}
 	else
-		chdirReturn = changeCurrentDirectory(data->arguments[1]);
-	if (chdirReturn == -1)
+		chdir_ret = chdir(info->argv[1]);
+	if (chdir_ret == -1)
 	{
-		printError(data, "can't cd to ");
-		printString(data->arguments[1]);
-		printCharacter('\n');
+		print_error(info, "can't cd to ");
+		_eputs(info->argv[1]), _eputchar('\n');
 	}
 	else
 	{
-		setEnvironmentVariable(data, "OLDPWD", getEnvironmentVariable(data, "PWD="));
-		setEnvironmentVariable(data, "PWD", getCurrentWorkingDirectory(buffer, 1024));
+		_setenv(info, "OLDPWD", _getenv(info, "PWD="));
+		_setenv(info, "PWD", getcwd(buffer, 1024));
 	}
 	return (0);
 }
 
 /**
- * helpCommand - displays help message
- * @data: Structure containing potential arguments. Used to maintain
+ * _help - changes the current directory of the process
+ * @info: Structure containing potential arguments. Used to maintain
  * constant function prototype.
  * Return: Always 0
  */
-int helpCommand(info_t *data)
+int _help(info_t *info)
 {
-	char **argumentsArray;
+	char **arg_array;
 
-	argumentsArray = data->arguments;
-	printString("help call works. Function not yet implemented \n");
+	arg_array = info->argv;
+	_puts("help call works. Function not yet implemented \n");
 	if (0)
-		printString(*argumentsArray); /* temp att_unused workaround */
+		_puts(*arg_array); /* temp att_unused workaround */
 	return (0);
 }
 
