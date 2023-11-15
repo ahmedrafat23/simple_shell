@@ -15,16 +15,16 @@ void init_custom_info(info_t *info)
 /**
  * configure_custom_info - initializes custom_info_t struct
  * @info: struct address
- * @arg_vector: argument vector
+ * @argv: argument vector
  */
-void configure_custom_info(info_t *info, char **arg_vector)
+void configure_custom_info(info_t *info, char **argv)
 {
 	int i = 0;
 
 	info->fname = argv[0];
 	if (info->arg)
 	{
-		info->argv = strtow(info->arg, (char *) " \t");
+		info->argv = strtow(info->arg, char * " \t");
 		if (!info->argv)
 		{
 			info->argv = malloc(sizeof(char *) * 2);
