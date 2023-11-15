@@ -13,7 +13,7 @@ int ex_sh(info_t *info)
 
 	if (info->argv[1]) /* If there is an exit arguement */
 	{
-		exitcheck = _erratoi(info->argv[1]);
+		exitcheck = str_to_int(info->argv[1]);
 		if (exitcheck == -1)
 		{
 			info->status = 2;
@@ -48,7 +48,7 @@ int ch_dir(info_t *info)
 		dir = get_env(info, "HOME=");
 		if (!dir)
 			chdir_ret = /* TODO: what should this be? */
-				chdir((dir = _getenv(info, "PWD=")) ? dir : "/");
+				chdir((dir = get_env(info, "PWD=")) ? dir : "/");
 		else
 			chdir_ret = chdir(dir);
 	}
@@ -68,7 +68,7 @@ int ch_dir(info_t *info)
 		chdir_ret = chdir(info->argv[1]);
 	if (chdir_ret == -1)
 	{
-		print_error(info, "can't cd to ");
+		err_msg(info, "can't cd to ");
 		custom_puts(info->argv[1]), custom_putchar('\n');
 	}
 	else

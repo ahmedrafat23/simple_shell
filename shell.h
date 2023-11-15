@@ -202,7 +202,7 @@ void release_custom_info(info_t *, int);
 /* env_management.c */
 char *get_env(info_t *, const char *);
 int print_env(info_t *);
-int set_env(info_t *);
+void set_env(info_t *info, const char *name, const char *value);
 int unset_env(info_t *);
 int pop_env(info_t *);
 
