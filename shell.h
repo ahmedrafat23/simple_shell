@@ -180,11 +180,11 @@ int ch_dir(info_t *);
 int _help(info_t *);
 
 /* user_commands1.c */
-int history_display(info_t);
-int unset_alias(info_t, char);
-int set_alias(info_t, char);
-int print_alias(list_t);
-int alias_shell(info_t);
+int history_display(info_t *info);
+int unset_alias(info_t *info, char *str);
+int set_alias(info_t *info, char *str);
+int print_alias(list_t *node);
+int alias_shell(info_t *info);
 
 /* enhanced_operations.c */
 
