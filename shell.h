@@ -219,11 +219,11 @@ int build_hist_list(info_t *info, char *buf, int linecount);
 int renumber_hist(info_t *info);
 
 /* star_link.c */
-list_t *insert_list_node(list_t **, const char *, int);
-list_t *append_list_node(list_t **, const char *, int);
-size_t print_list_content(const list_t *);
-int remove_node_at_index(list_t **, unsigned int);
-void clear_list(list_t **);
+list_t *insert_list_node(list_t **list_head, const char *content, int index);
+list_t *append_list_node(list_t **list_head, const char *content, int index);
+size_t print_list_content(const list_t *h);
+int remove_node_at_index(list_t **list_head, unsigned int index);
+void clear_list(list_t **list_head_ptr);
 
 /* functions_2.c */
 size_t list_len(const list_t *);
