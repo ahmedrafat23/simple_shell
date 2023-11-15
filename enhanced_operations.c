@@ -96,7 +96,7 @@ ssize_t receive_input(info_t *info)
  *
  * Return: read_bytes
  */
-ssize_t read_buf(shell_info_t *info, char *buffer, size_t *i)
+ssize_t read_buf(info_t *info, char *buffer, size_t *i)
 {
 	ssize_t read_bytes = 0;
 
@@ -116,7 +116,7 @@ ssize_t read_buf(shell_info_t *info, char *buffer, size_t *i)
  *
  * Return: s
  */
-int custom_getline(shell_info_t *info, char **ptr, size_t *size)
+int custom_getline(info_t *info, char **ptr, size_t *size)
 {
 	static char buf[READ_BUFFER_SIZE];
 	static size_t i, len;
