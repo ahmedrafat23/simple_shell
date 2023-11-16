@@ -55,6 +55,7 @@ ssize_t receive_input(info_t *info)
 	static size_t i, j, len;
 	ssize_t read_bytes = 0;
 	char **buf_ptr = &(info->arg), *ptr;
+
 	_putchar(BUF_FLUSH);
 	read_bytes = buffer_input(info, &buf, &len);
 	if (read_bytes == -1) /* EOF */

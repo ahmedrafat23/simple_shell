@@ -19,21 +19,21 @@ int _free(void **ptr)
 
 /**
  * free_list - delete all the list
- * @node: pointer to the first node
+ * @head: pointer to the first node
  */
 
 void free_list(list_t **head)
 {
-	list_t *current = head;
-	list_t *nextNode;
+        list_t *current = *head;
+        list_t *nextNode;
 
-	while (current != NULL)
-	{
-		nextNode = current->next;
-		free(current->num);
-		free(current->str);
-		free(current);
-		current = nextNode;
-	}
+        while (current != NULL)
+        {
+                nextNode = current->next;
+                free(current->index);
+                free(current->content);
+                free(current);
+                current = nextNode;
+        }
+        *head = (NULL);
 }
-
