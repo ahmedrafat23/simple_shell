@@ -73,11 +73,11 @@ int set_environment(info_t *info, char *var, char *value)
 	node = info->env;
 	while (node)
 	{
-		p = starts_with(node->str, var);
+		p = starts_with(node->content, var);
 		if (p && *p == '=')
 		{
-			free(node->str);
-			node->str = buf;
+			free(node->content);
+			node->content = buf;
 			info->env_changed = 1;
 			return (0);
 		}
