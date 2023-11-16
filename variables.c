@@ -100,7 +100,7 @@ int re_alias(info_t *info)
 		if (!node)
 			return (0);
 		free(info->argv[0]);
-		c = custom_strchr(node->str, '=');
+		c = custom_strchr(node->content, '=');
 		if (!c)
 			return (0);
 		c = _strdup(c + 1);
@@ -143,7 +143,7 @@ int re_vars(info_t *info)
 		if (node)
 		{
 			re_string(&(info->argv[k]),
-						   _strdup(custom_strchr(node->str, '=') + 1));
+						   _strdup(custom_strchr(node->content, '=') + 1));
 			continue;
 		}
 		re_string(&info->argv[k], _strdup(""));

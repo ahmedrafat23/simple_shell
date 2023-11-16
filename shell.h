@@ -132,7 +132,7 @@ int custom_fdput(char c, int fd);
 int custom_putsfd(char *str, int fd);
 
 /* string_operations.c */
-char *_strncpy(char *, char *, int);
+char *_strncpy(char *dest, char *src);
 char *custom_strncat(char *, char *, int);
 char *custom_strchr(char *, char);
 

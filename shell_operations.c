@@ -14,25 +14,25 @@ int hsh(info_t *info, char **av)
 
 	while (r != -1 && builtin_ret != -2)
 	{
-		clear_info(info);
-		if (interactive(info))
+		init_custom_info(info);
+		if (is_interactive(info))
 			_puts("$ ");
-		_eputchar(BUF_FLUSH);
-		r = get_input(info);
+		custom_putchar(BUF_FLUSH);
+		r = receive_input(info);
 		if (r != -1)
 		{
-			set_info(info, av);
+			configure_custom_info(info, av);
 			builtin_ret = find_builtin(info);
 			if (builtin_ret == -1)
 				find_cmd(info);
 		}
-		else if (interactive(info))
+		else if (is_interactive(info))
 			_putchar('\n');
-		free_info(info, 0);
+		release_custom_info(info, 0);
 	}
-	write_history(info);
-	free_info(info, 1);
-	if (!interactive(info) && info->status)
+	write_hist(info);
+	release_custom_info(info, 1);
+	if (!is_interactive(info) && info->status)
 		exit(info->status);
 	if (builtin_ret == -2)
 	{
@@ -56,14 +56,14 @@ int find_builtin(info_t *info)
 {
 	int k, built_in_ret = -1;
 	builtin_table builtintbl[] = {
-		{"exit", _myexit},
-		{"env", _myenv},
-		{"help", _myhelp},
-		{"history", _myhistory},
-		{"setenv", _mysetenv},
-		{"unsetenv", _myunsetenv},
-		{"cd", _mycd},
-		{"alias", _myalias},
+		{"exit", ex_sh},
+		{"env", (char *(*)(info_t *, const char *))get_env},
+		{"help", _help},
+		{"history", history_display},
+		{"setenv", set_env},
+		{"unsetenv", unset_env},
+		{"cd", ch_dir},
+		{"alias", alias_shell},
 		{NULL, NULL}};
 
 	for (k = 0; builtintbl[k].type; k++)
