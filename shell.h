@@ -187,12 +187,11 @@ int print_alias(list_t *node);
 int alias_shell(info_t *info);
 
 /* enhanced_operations.c */
-
-ssize_t buffer_input(info_t, char, size_t);
+ssize_t buffer_input(info_t *info, char **buf, size_t *len);
 ssize_t receive_input(info_t *info);
-ssize_t read_buf(info_t, char, size_t);
-int custom_getline(info_t, char, size_t);
-void handle_sigint(__attribute__((unused)) int);
+ssize_t read_buf(info_t *info, char *buffer, size_t *i);
+int custom_getline(info_t *info, char **ptr, size_t *size);
+void handle_sigint(__attribute__((unused)) int signal_num);
 
 /* custom_information.c */
 void init_custom_info(info_t *);
