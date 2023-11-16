@@ -31,7 +31,7 @@ ssize_t buffer_input(info_t *info, char **buf, size_t *len)
 	read_bytes--;
 	}
 	info->linecount_flag = 1;
-	re_comments(*buf);
+	rm_comments(*buf);
 	build_hist_list(info, *buf, info->histcount++);
 	/* if (_strchr(*buf, ';')) is this a command chain? */
 	{
@@ -64,7 +64,7 @@ ssize_t receive_input(info_t *info)
 	j = i; /* init new iterator to current buffer position */
 	ptr = buf + i; /* get pointer for return */
 
-	check_chain(info, buf, &j, i, len);
+	ch_chain(info, buf, &j, i, len);
 	while (j < len)
 	{ /* iterate to semicolon or end */
 	if (is_chain(info, buf, &j))
@@ -76,7 +76,7 @@ ssize_t receive_input(info_t *info)
 	if (i >= len)
 	{ /* reached end of buffer? */
 	i = len = 0; /* reset position and length */
-	info->cmd_buffer_type = CMD_NORM;
+	info->cmd_buf_type = CMD_NORM;
 	}
 
 	*buf_ptr = ptr; /* pass back pointer to current command position */
@@ -101,7 +101,7 @@ ssize_t read_buf(info_t *info, char *buffer, size_t *i)
 
 	if (*i)
 	return (0);
-	read_bytes = read(info->readfd, buffer, READ_BUFFER_SIZE);
+	read_bytes = read(info->readfd, buffer, READ_BUF_SIZE);
 	if (read_bytes >= 0)
 	*i = read_bytes;
 	return (read_bytes);
@@ -117,7 +117,7 @@ ssize_t read_buf(info_t *info, char *buffer, size_t *i)
  */
 int custom_getline(info_t *info, char **ptr, size_t *size)
 {
-	static char buf[READ_BUFFER_SIZE];
+	static char buf[READ_BUF_SIZE];
 	static size_t i, len;
 	size_t k;
 	ssize_t read_bytes = 0, result = 0;
@@ -133,14 +133,14 @@ int custom_getline(info_t *info, char **ptr, size_t *size)
 	if (read_bytes == -1 || (read_bytes == 0 && len == 0))
 	return (-1);
 
-	c = _strchr(buf + i, '\n');
+	c = strchr(buf + i, '\n');
 	k = c ? 1 + (unsigned int)(c - buf) : len;
 	new_p = _realloc(p, result, result ? result + k : k + 1);
 	if (!new_p) /* MALLOC FAILURE! */
 	return (p ? (free(p), -1) : -1);
 
 	if (result)
-	_strncat(new_p, buf + i, k - i);
+	strcat(new_p, buf + i, k - i);
 	else
 	_strncpy(new_p, buf + i, k - i + 1);
 
