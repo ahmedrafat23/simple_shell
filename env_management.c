@@ -7,7 +7,7 @@
  */
 int print_env(info_t *info)
 {
-	print_list_str(info->env);
+	print_list(info->env);
 	return (0);
 }
 
@@ -42,10 +42,11 @@ int set_env(info_t *info)
 {
 	if (info->argc != 3)
 	{
-		_eputs("Incorrect number of arguments\n");
+		_puts("Incorrect number of arguments\n");
 		return (1);
 	}
-	if (_setenv(info, info->argv[1], info->argv[2]))
+	if (setenv(info->argv[1], info->argv[2], 1))
+
 		return (0);
 	return (1);
 }
@@ -61,11 +62,11 @@ int unset_env(info_t *info)
 
 	if (info->argc == 1)
 	{
-		_eputs("Too few arguments.\n");
+		_puts("Too few arguments.\n");
 		return (1);
 	}
 	for (i = 1; i <= info->argc; i++)
-		_unsetenv(info, info->argv[i]);
+		unsetenv(info->argv[i]);
 
 	return (0);
 }
