@@ -82,7 +82,7 @@ int pop_env(info_t *info)
 	size_t i;
 
 	for (i = 0; environ[i]; i++)
-		add_node_end(&node, environ[i], 0);
+		append_list_node(&node, environ[i], 0);
 	info->env = node;
 	return (0);
 }
