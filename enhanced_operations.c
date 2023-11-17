@@ -141,12 +141,12 @@ int custom_getline(info_t *info, char **ptr, size_t *size)
 	return (p ? (free(p), -1) : -1);
 
 	if (result)
-	strcat(new_p, buf + i, k - i);
+	_strcat(new_p, buf + i, k - i);
 	else
 	_strncpy(new_p, buf + i, k - i + 1);
 
-	result += k - i;
-	i = k;
+	result += k;
+	i += k;
 	p = new_p;
 
 	if (size)

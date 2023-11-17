@@ -24,7 +24,7 @@ void configure_custom_info(info_t *info, char **argv)
 	info->fname = argv[0];
 	if (info->arg)
 	{
-		info->argv = strtow(info->arg, (char *)" \t");
+		info->argv = strtow(info->arg, " \t");
 		if (!info->argv)
 		{
 			info->argv = malloc(sizeof(char *) * 2);
