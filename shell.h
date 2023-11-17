@@ -18,8 +18,8 @@
 #define BUF_FLUSH -1
 
 /* for convert_number() */
-#define CONVERT_LOWERCASE 1
-#define CONVERT_UNSIGNED 2
+#define LOWERCASE 1
+#define UNSIGNED 2
 
 /* 1 if using system getline() */
 #define USE_GETLINE 0
