@@ -112,6 +112,7 @@ size_t print_list(const list_t *h)
 	while (h)
 	{
 		char *converted = num_conv(h->index, 10, 0);
+
 		_puts(converted);
 		_putchar(':');
 		_putchar(' ');

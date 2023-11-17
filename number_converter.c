@@ -55,12 +55,12 @@ void err_msg(info_t *info, char *estr)
  */
 int print_dec(int input, int fd)
 {
-	int (*put)(char) = _put;
+	int (*put)(char) = _puts;
 	int i, count = 0;
 	unsigned int abs, curr;
 
 	if (fd == STDERR_FILENO)
-		put = _eput;
+		put = custom_puts;
 	if (input < 0)
 	{
 		abs = -input;

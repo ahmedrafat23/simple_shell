@@ -68,8 +68,8 @@ void find_cmd(info_t *info)
 	}
 	else
 	{
-		if ((is_interactive(info) || getenv(info, "PATH=") || info->argv[0][0] == '/')
-		&& if_is_cmd(info, info->argv[0]))
+		if ((is_interactive(info) || getenv(info, "PATH=") ||
+		info->argv[0][0] == '/') && if_is_cmd(info, info->argv[0]))
 			fork_cmd(info);
 		else if (*(info->arg) != '\n')
 		{
