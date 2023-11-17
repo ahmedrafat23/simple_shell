@@ -27,11 +27,11 @@ int main(int arc, char **arv)
 			}
 			if (errno == ENOENT)
 			{
-				_eputs(arv[0]);
-				_eputs(": 0: Can't open ");
-				_eputs(arv[1]);
-				_eputchar('\n');
-				_eputchar(BUF_FLUSH);
+				_puts(arv[0]);
+				_puts(": 0: Can't open ");
+				_puts(arv[1]);
+				_putchar('\n');
+				_putchar(BUF_FLUSH);
 				exit(127);
 			}
 			return (EXIT_FAILURE);
@@ -39,7 +39,7 @@ int main(int arc, char **arv)
 		info->readfd = fd;
 	}
 	populate_env_list(info);
-	read_history(info);
+	read_hist(info);
 	hsh(info, arv);
 	return (EXIT_SUCCESS);
 }

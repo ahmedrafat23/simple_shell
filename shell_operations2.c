@@ -18,7 +18,7 @@ void fork_cmd(info_t *info)
 	}
 	if (child_pid == 0)
 	{
-		if (execve(info->path, info->argv, get_environ(info)) == -1)
+		if (execve(info->path, info->argv, get_environment(info)) == -1)
 		{
 			free_info(info, 1);
 			if (errno == EACCES)
@@ -33,7 +33,7 @@ void fork_cmd(info_t *info)
 		{
 			info->status = WEXITSTATUS(info->status);
 			if (info->status == 126)
-				print_error(info, "Permission denied\n");
+				print_env(info, "Permission denied\n");
 		}
 	}
 }
@@ -60,7 +60,7 @@ void find_cmd(info_t *info)
 			k++;
 	if (!k)
 		return;
-	path = find_path(info, _getenv(info, "PATH="), info->argv[0]);
+	path = find_path(info, getenv(info, "PATH="), info->argv[0]);
 	if (path)
 	{
 		info->path = path;
@@ -68,13 +68,13 @@ void find_cmd(info_t *info)
 	}
 	else
 	{
-		if ((interactive(info) || _getenv(info, "PATH=") || info->argv[0][0] == '/')
-		&& is_cmd(info, info->argv[0]))
+		if ((is_interactive(info) || getenv(info, "PATH=") || info->argv[0][0] == '/')
+		&& if_is_cmd(info, info->argv[0]))
 			fork_cmd(info);
 		else if (*(info->arg) != '\n')
 		{
 			info->status = 127;
-			print_error(info, "not found\n");
+			print_env(info, "not found\n");
 		}
 	}
 }

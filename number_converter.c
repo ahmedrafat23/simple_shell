@@ -37,13 +37,13 @@ int str_to_int(char *s)
  */
 void err_msg(info_t *info, char *estr)
 {
-	_eputs(info->fname);
-	_eputs(": ");
-	print_dec(info->line_num, STDERR_FILENO);
-	_eputs(": ");
-	_eputs(info->args[0]);
-	_eputs(": ");
-	_eputs(estr);
+	_puts(info->fname);
+	_puts(": ");
+	print_dec(info->line_count, STDERR_FILENO);
+	_puts(": ");
+	_puts(info->arg[0]);
+	_puts(": ");
+	_puts(estr);
 }
 
 /**
